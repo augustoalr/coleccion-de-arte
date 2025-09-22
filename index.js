@@ -23,7 +23,7 @@ const PORT = 4000;
 //app.use(cors());
 const corsOptions = {
 
-    origin: 'https://coleccion-de-arte.vercel.app/', 
+    origin: 'https://coleccion-de-arte.vercel.app', 
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true,
