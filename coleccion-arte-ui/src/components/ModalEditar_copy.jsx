@@ -18,13 +18,13 @@ const style = {
 };
 
 const categorias = [
-  'Pintura', 'Collage', 'Escultura', 'Textil', 'Cerámica', 'Vitral', 'Ensamblaje', 'Dibujo',
-  'Fotografía', 'Estampa', 'Instalación', 'Instalación fotográfica', 'Video instalación', 'Objeto',
+  'Pintura', 'Collage', 'Escultura', 'Textil', 'Cerámica', 'Vitral', 'Ensamblaje', 'Dibujo', 
+  'Fotografía', 'Estampa', 'Instalación', 'Instalación fotográfica', 'Video instalación', 'Objeto', 
   'Nuevos medios', 'Instalación a pared', 'Maqueta/Boceto', 'Exterior', 'Documento histórico'
 ];
 
 const modosAdquisicion = [
-  'Compra', 'Donación', 'Comodato'
+  'Compra', 'Donación', 'Comodato' 
 ];
 
 const estadosConservacion = ['Bueno', 'Regular', 'Malo'];
@@ -47,7 +47,7 @@ function ModalEditar({ obra, onClose, onSave }) {
   const [nuevaImagen, setNuevaImagen] = useState(null);
   const [tabValue, setTabValue] = useState(0);
   const { estados, ubicaciones } = useCatalogos();
-
+  
 
   // CAMBIO: Refs para los Autocomplete
   const categoriaRef = useRef(null);
@@ -104,9 +104,9 @@ function ModalEditar({ obra, onClose, onSave }) {
   const CustomPopper = ({ inputRef, ...props }) => {
     const width = inputRef.current ? inputRef.current.offsetWidth : 'auto';
     return (
-      <Popper
-        {...props}
-        style={{ ...props.style, width }}
+      <Popper 
+        {...props} 
+        style={{ ...props.style, width }} 
         placement="bottom-start"
         // sx={{ border: '1px solid blue' }} // CAMBIO: Debug (quitar después)
       />
@@ -119,7 +119,7 @@ function ModalEditar({ obra, onClose, onSave }) {
     <Modal open={true} onClose={onClose}>
       <Box component="form" onSubmit={handleSubmit} sx={style}>
         <Typography variant="h6" component="h2">Editar Obra: {formData.titulo}</Typography>
-
+        
         <Box sx={{ borderBottom: 1, borderColor: 'divider', mt: 2 }}>
           <Tabs value={tabValue} onChange={handleTabChange} centered>
             <Tab label="Ficha Técnica" />
@@ -218,14 +218,14 @@ function ModalEditar({ obra, onClose, onSave }) {
 
           <TabPanel value={tabValue} index={2}>
             <Stack direction="column" spacing={2}>
-
-
+              
 
                 <Stack direction={{ xs: 'column', md: 'row' }} spacing={2} sx={{ width: '100%' }}>
+                  
 
-
-                <TextField label="Historia de procedencia" name="propietario_original" value={formData.propietario_original || ''} onChange={handleChange} fullWidth sx={{ flex: 1 }} />
-
+               
+                <TextField label="Historia de procedencia" name="propietario_original" value={formData.propietario_original || ''} onChange={handleChange} fullWidth sx={{ flex: 1 }} /> 
+                
 
                  <Autocomplete
                                 freeSolo
@@ -237,7 +237,6 @@ function ModalEditar({ obra, onClose, onSave }) {
                                 renderInput={(params) =><TextField {...params} label="Modos de adquisición" fullWidth inputRef={modoAdquisicionRef} />}
                               />
                 </Stack>
-
 
 
               <Stack direction={{ xs: 'column', md: 'row' }} spacing={2} sx={{ width: '100%' }}>

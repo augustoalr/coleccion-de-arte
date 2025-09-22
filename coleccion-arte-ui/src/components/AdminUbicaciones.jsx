@@ -3,7 +3,7 @@ import { Box, Typography, Paper, List, ListItem, ListItemText, TextField, Button
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add';
-import { AuthContext } from '../context/AuthContext';
+import AuthContext from '../context/AuthContext';
 import API_URL from '../apiConfig';
 
 function AdminUbicaciones() {

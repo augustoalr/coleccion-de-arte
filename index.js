@@ -27,11 +27,21 @@ app.use('/assets', express.static('assets'));
 
 // Configuración de la conexión a la base de datos
 const pool = new Pool({
-    user: 'postgres',
-    host: 'localhost',
-    database: 'arte_coleccion',
-    password: '18267929', // ¡No olvides poner tu contraseña!
-    port: 5432,
+    user: process.env.DB_USER || 'postgres',
+    host: process.env.DB_HOST || 'localhost',
+    database: process.env.DB_DATABASE || 'arte_coleccion',
+    password: process.env.DB_PASSWORD || '18267929',
+    port: process.env.DB_PORT || 5432,
+});
+
+// Verificar conexión a la base de datos al iniciar
+pool.query('SELECT NOW()', (err, res) => {
+  if (err) {
+    console.error('Error fatal al conectar con la base de datos:', err);
+    process.exit(1);
+  } else {
+    console.log('Conexión a la base de datos establecida correctamente.');
+  }
 });
 
 // --- DEFINICIÓN DE ROLES ---
@@ -613,9 +623,12 @@ app.get('/api/obras', authorize(allUsers), async (req, res) => {
         }
         const totalResult = await pool.query(`SELECT COUNT(o.*) AS total ${baseQuery}${whereClause}`, countParams);
         const totalObras = parseInt(totalResult.rows[0].total, 10);
+
         const dataParams = [...countParams];
         dataParams.push(limit, offset);
-        const dataQuery = `SELECT o.*, a.nombre AS autor_nombre, u.nombre AS ubicacion_nombre ${baseQuery} ${whereClause} ORDER BY o.id DESC LIMIT ${dataParams.length - 1} OFFSET ${dataParams.length}`;
+
+        const dataQuery = `SELECT o.*, a.nombre AS autor_nombre, u.nombre AS ubicacion_nombre ${baseQuery} ${whereClause} ORDER BY o.id DESC LIMIT $${dataParams.length - 1} OFFSET $${dataParams.length}`;
+
         const obrasResult = await pool.query(dataQuery, dataParams);
         res.json({ obras: obrasResult.rows, totalObras: totalObras, totalPaginas: Math.ceil(totalObras / limit) });
     } catch (err) { console.error(err.message); res.status(500).send('Error en el servidor al obtener las obras'); }
@@ -1083,7 +1096,7 @@ app.post('/api/usuarios/login', async (req, res) => {
         const isMatch = await bcrypt.compare(password, user.password_hash);
         if (!isMatch) return res.status(400).send('Credenciales inválidas.');
         const payload = { id: user.id, email: user.email, rol: user.rol };
-        const token = jwt.sign(payload, 'secreto_super_secreto', { expiresIn: '1h' });
+        const token = jwt.sign(payload, process.env.JWT_SECRET || 'secreto_super_secreto', { expiresIn: '1h' });
                 await registrarAuditoria('Login', user.id, user.email, { email: user.email });
         res.json({ token });
     } catch (err) {

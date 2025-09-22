@@ -3,7 +3,7 @@ import { Box, Typography, Paper, Button, TextField, List, ListItem, ListItemText
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { AuthContext } from '../context/AuthContext';
+import AuthContext from '../context/AuthContext';
 import API_URL from '../apiConfig';
 
 function GestionMovimientos({ obraId }) {

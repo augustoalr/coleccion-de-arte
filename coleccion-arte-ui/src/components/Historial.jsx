@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Paper, Typography, CircularProgress, Box, Pagination, Stack, Button, Card, CardContent, Collapse, IconButton, useTheme, Grid, Divider } from '@mui/material';
 import { TimelineDot } from '@mui/lab';
-import { AuthContext } from '../context/AuthContext';
+import AuthContext from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 
 // --- Iconos para Acciones ---

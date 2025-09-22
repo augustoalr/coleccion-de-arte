@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, FormGroup, FormControlLabel, Checkbox, RadioGroup, Radio, FormControl, FormLabel, CircularProgress } from '@mui/material';
-import { AuthContext } from '../context/AuthContext';
+import AuthContext from '../context/AuthContext';
 import { saveAs } from 'file-saver';
 import API_URL from '../apiConfig';
 

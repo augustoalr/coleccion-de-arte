@@ -1,12 +1,12 @@
 # Guía Completa para Desplegar tu Aplicación en la Nube (Gratis)
 
-Esta guía te llevará paso a paso para desplegar tu portafolio en servicios gratuitos y dejarlo 100% funcional.
+Esta guía te llevará paso a paso para desplegar tu aplicación de gestión de colección de arte en servicios gratuitos y dejarlo 100% funcional.
 
 **El plan es el siguiente:**
 1.  **Código Fuente:** Usaremos **GitHub** para almacenar y gestionar tu código.
 2.  **Base de Datos (PostgreSQL):** Usaremos **Neon** para alojar tu base de datos PostgreSQL en la nube.
 3.  **Backend (Node.js/Express):** Usaremos **Render** para alojar tu servidor de Node.js.
-4.  **Frontend (React/Vite):** Usaremos **Vercel** para alojar tu aplicación de React.
+4.  **Frontend (React/Vite):** Usaremos **Vercel** o **Netlify** para alojar tu aplicación de React.
 
 ---
 
@@ -58,9 +58,10 @@ Esta guía te llevará paso a paso para desplegar tu portafolio en servicios gra
     *   Una vez creado el proyecto, busca la sección "Connection Details" o similar.
     *   Copia la URL de conexión que se ve así: `postgres://user:password@host:port/dbname`. **Esta URL es tu secreto más importante.**
 4.  **Crea las Tablas:**
-    *   Dentro de Neon, busca el **SQL Editor**.
-    *   Copia **todo el contenido** del script SQL que te di en el archivo `guia_db.txt`.
-    *   Pega el script en el editor de Neon y ejecútalo. Esto creará todas tus tablas en la base de datos en la nube.
+   *   Dentro de Neon, busca el **SQL Editor**.
+   *   Copia **todo el contenido** del script SQL que se encuentra en el archivo `guia_db.txt` de tu proyecto.
+   *   Pega el script en el editor de Neon y ejecútalo. Esto creará todas tus tablas en la base de datos en la nube.
+   *   **Importante:** Asegúrate de que las tablas se crearon correctamente antes de continuar.
 
 ---
 
@@ -80,16 +81,17 @@ Esta guía te llevará paso a paso para desplegar tu portafolio en servicios gra
     *   **Start Command:** `node index.js`
     *   **Instance Type:** Elige el plan **Free**.
 4.  **Añade las Variables de Entorno (¡MUY IMPORTANTE!):**
-    *   Busca la sección "Environment" o "Advanced".
-    *   Aquí debes añadir los "Secret Files" o variables que tu `index.js` necesita. Estas reemplazan a tu archivo `.env` local.
-    *   Haz clic en "Add Environment Variable".
-    *   Añade las siguientes variables:
-        *   `DB_USER`: El usuario de tu base de datos Neon.
-        *   `DB_HOST`: El host de Neon.
-        *   `DB_DATABASE`: El nombre de la base de datos en Neon.
-        *   `DB_PASSWORD`: La contraseña de Neon.
-        *   `DB_PORT`: El puerto de Neon.
-        *   `JWT_SECRET`: Un secreto para tus tokens (puedes inventar una frase larga y compleja).
+   *   Busca la sección "Environment" o "Advanced".
+   *   Aquí debes añadir los "Secret Files" o variables que tu `index.js` necesita. Estas reemplazan a tu archivo `.env` local.
+   *   Haz clic en "Add Environment Variable".
+   *   Añade las siguientes variables con tus valores de Neon:
+       *   `DB_USER`: `neondb_owner`
+       *   `DB_HOST`: `ep-ancient-queen-a11h3oet-pooler.ap-southeast-1.aws.neon.tech`
+       *   `DB_DATABASE`: `neondb`
+       *   `DB_PASSWORD`: `npg_13MSGJiCAIeF`
+       *   `DB_PORT`: `5432`
+       *   `JWT_SECRET`: Genera una frase secreta larga y segura (ej: `mi_super_secreto_jwt_para_produccion_2024!@#`)
+       *   `MASTER_PASSWORD_HASH`: `$2a$12$z.uT0NTIite/tF4ZAoO89e.rncyX587EqovdKcR4j50R.L63GmZ0e` (o genera uno nuevo)
 5.  **Despliega:**
     *   Haz clic en "Create Web Service".
     *   Render empezará a construir y desplegar tu aplicación. Puedes ver el progreso en los logs.
@@ -97,33 +99,56 @@ Esta guía te llevará paso a paso para desplegar tu portafolio en servicios gra
 
 ---
 
-### Paso 4: Desplegar el Frontend en Vercel
+### Paso 4: Desplegar el Frontend en Vercel o Netlify
+
+Elige uno de los dos servicios. Ambos son similares y gratuitos.
+
+#### Opción A: Desplegar en Vercel
 
 1.  **Crea una cuenta en Vercel:** Ve a [vercel.com](https://vercel.com) y regístrate con tu cuenta de GitHub.
 2.  **Crea un Nuevo Proyecto:**
-    *   En tu Dashboard, haz clic en "Add New..." -> "Project".
-    *   Importa el repositorio de GitHub que creaste.
+     *   En tu Dashboard, haz clic en "Add New..." -> "Project".
+     *   Importa el repositorio de GitHub que creaste.
 3.  **Configura el Proyecto:**
-    *   Vercel es muy bueno detectando proyectos de React/Vite. Debería autoconfigurar casi todo.
-    *   **Root Directory:** ¡Importante! Haz clic en "Edit" y selecciona `coleccion-arte-ui` de la lista. Esto le dice a Vercel que el frontend está en esa subcarpeta.
-    *   Verifica que el "Framework Preset" sea `Vite`.
-4.  **Añade la Variable de Entorno:**
-    *   Expande la sección "Environment Variables".
-    *   Añade una nueva variable:
-        *   **Name:** `VITE_API_URL`
-        *   **Value:** La URL de tu backend desplegado en Render (la que copiaste en el paso anterior). Ej: `https://coleccion-arte-api.onrender.com`
+     *   Vercel detectará automáticamente el proyecto Vite en la subcarpeta `coleccion-arte-ui`.
+     *   **Root Directory:** `coleccion-arte-ui`
+     *   Verifica que el "Framework Preset" sea `Vite`.
+4.  **Añade las Variables de Entorno:**
+   *   Expande la sección "Environment Variables".
+   *   Añade las siguientes variables:
+       *   **Name:** `VITE_API_URL`
+       *   **Value:** La URL de tu backend desplegado en Render (la que copiaste en el paso anterior). Ej: `https://coleccion-arte-api.onrender.com`
 5.  **Despliega:**
-    *   Haz clic en "Deploy".
-    *   Vercel construirá y desplegará tu frontend. Al finalizar, te dará la URL pública de tu portafolio (ej. `https://tu-proyecto.vercel.app`).
+     *   Haz clic en "Deploy".
+     *   Vercel construirá y desplegará tu frontend. Al finalizar, te dará la URL pública (ej. `https://tu-proyecto.vercel.app`).
+
+#### Opción B: Desplegar en Netlify (Alternativa)
+
+1.  **Crea una cuenta en Netlify:** Ve a [netlify.com](https://netlify.com) y regístrate con tu cuenta de GitHub.
+2.  **Crea un Nuevo Sitio:**
+     *   En tu Dashboard, haz clic en "Add new site" -> "Import an existing project".
+     *   Conecta tu cuenta de GitHub y selecciona el repositorio.
+3.  **Configura el Build:**
+     *   **Base directory:** `coleccion-arte-ui`
+     *   **Build command:** `npm run build`
+     *   **Publish directory:** `dist`
+4.  **Añade la Variable de Entorno:**
+     *   Ve a "Site settings" -> "Environment variables".
+     *   Añade:
+         *   **Key:** `VITE_API_URL`
+         *   **Value:** La URL de tu backend en Render.
+5.  **Despliega:**
+     *   Haz clic en "Deploy site".
+     *   Netlify construirá y desplegará tu sitio. Obtendrás una URL como `https://amazing-site.netlify.app`.
 
 ---
 
 ### Paso 5: Configuración Final y ¡Listo!
 
-1.  **CORS:** El código de tu backend (`app.use(cors())`) es bastante permisivo, por lo que no deberías tener problemas de CORS. Si los tuvieras, tendrías que configurar CORS en `index.js` para permitir explícitamente peticiones desde tu URL de Vercel.
+1.  **CORS:** El código de tu backend (`app.use(cors())`) es bastante permisivo, por lo que no deberías tener problemas de CORS. Si los tuvieras, tendrías que configurar CORS en `index.js` para permitir explícitamente peticiones desde tu URL de Vercel/Netlify.
 2.  **Prueba todo:**
-    *   Abre la URL de Vercel.
-    *   Crea un nuevo usuario administrador (ya que la base de datos de Neon está vacía).
-    *   Inicia sesión, añade obras, edita, elimina y genera un PDF para asegurarte de que todo funciona.
+     *   Abre la URL de Vercel o Netlify.
+     *   Crea un nuevo usuario administrador (ya que la base de datos de Neon está vacía).
+     *   Inicia sesión, añade obras, edita, elimina y genera un PDF para asegurarte de que todo funciona.
 
 ¡Felicidades! Ahora tienes un proyecto full-stack funcional en tu portafolio para que cualquier reclutador pueda verlo y probarlo.

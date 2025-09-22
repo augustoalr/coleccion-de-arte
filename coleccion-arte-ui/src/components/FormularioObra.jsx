@@ -1,7 +1,7 @@
 import React, { useState, useContext, useRef } from 'react';
 import { Box, TextField, Button, Typography, Paper, Stack, Autocomplete, Stepper, Step, StepLabel, Tooltip, Popper } from '@mui/material';
 import { useCatalogos } from '../hooks/useCatalogos';
-import { AuthContext } from '../context/AuthContext';
+import AuthContext from '../context/AuthContext';
 import API_URL from '../apiConfig';
 
 const steps = ['Ficha Técnica Principal', 'Descripciones', 'Datos de Registro'];

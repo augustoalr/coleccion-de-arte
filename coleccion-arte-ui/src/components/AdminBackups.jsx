@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { Box, Typography, Paper, Button, CircularProgress, Alert } from '@mui/material';
-import { AuthContext } from '../context/AuthContext';
+import AuthContext from '../context/AuthContext';
 import API_URL from '../apiConfig';
 
 function AdminBackups() {

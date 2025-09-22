@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Box, Typography, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Button, Select, MenuItem, CircularProgress, Alert } from '@mui/material';
-import { AuthContext } from '../context/AuthContext';
+import AuthContext from '../context/AuthContext';
 import API_URL from '../apiConfig';
 
 function AdminUsuarios() {

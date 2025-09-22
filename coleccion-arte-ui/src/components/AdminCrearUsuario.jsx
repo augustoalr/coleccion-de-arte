@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Box, Typography, Paper, Button, TextField, FormControl, InputLabel, Select, MenuItem, Alert } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import { AuthContext } from '../context/AuthContext';
+import AuthContext from '../context/AuthContext';
 import API_URL from '../apiConfig';
 
 function AdminCrearUsuario() {
