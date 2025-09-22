@@ -1,3 +1,5 @@
+
+require('dotenv').config();
 const express = require('express');
 const { Pool } = require('pg');
 const cors = require('cors');
@@ -18,7 +20,19 @@ const app = express();
 const PORT = 4000;
 
 // --- Middlewares y Configuración ---
-app.use(cors());
+//app.use(cors());
+const corsOptions = {
+
+    origin: 'https://coleccion-de-arte.vercel.app/', 
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true,
+    optionsSuccessStatus: 200 // Para navegadores antiguos que pueden tener problemas
+};
+
+app.use(cors(corsOptions));
+app.options('*', cors(corsOptions));
+
 app.use(express.json());
 const upload = multer({ dest: 'uploads/temp/' });
 app.use('/uploads', express.static('uploads'));
@@ -27,11 +41,11 @@ app.use('/assets', express.static('assets'));
 
 // Configuración de la conexión a la base de datos
 const pool = new Pool({
-    user: process.env.DB_USER || 'postgres',
-    host: process.env.DB_HOST || 'localhost',
-    database: process.env.DB_DATABASE || 'arte_coleccion',
-    password: process.env.DB_PASSWORD || '18267929',
-    port: process.env.DB_PORT || 5432,
+    user: process.env.DB_USER,
+    host: process.env.DB_HOST,
+    database: process.env.DB_DATABASE,
+    password: process.env.DB_PASSWORD,
+    port: process.env.DB_PORT,
 });
 
 // Verificar conexión a la base de datos al iniciar
