@@ -7,7 +7,7 @@ import Login from './components/Login';
 import RutaProtegida from './components/RutaProtegida';
 import RutaAdmin from './components/RutaAdmin'; // Importar
 import AdminUsuarios from './components/AdminUsuarios'; // Importar
-import { CssBaseline, Container } from '@mui/material';
+
 import AdminBackups from './components/AdminBackups';
 import AdminCrearUsuario from './components/AdminCrearUsuario'; // Importar
 
@@ -19,8 +19,6 @@ import AdminUbicaciones from './components/AdminUbicaciones'; // Importar nuevo 
 function App() {
   return (
     <>
-      <CssBaseline />
-      <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/" element={<RutaProtegida><Catalogo /></RutaProtegida>} />
@@ -36,7 +34,6 @@ function App() {
           <Route path="/admin/backups" element={<RutaAdmin><AdminBackups /></RutaAdmin>} />
           <Route path="/historial" element={<RutaAdmin><Historial /></RutaAdmin>} />
         </Routes>
-      </Container>
     </>
   );
 }

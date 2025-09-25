@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { Navigate } from 'react-router-dom';
 import AuthContext from '../context/AuthContext';
+import Layout from './Layout';
 
 function RutaProtegida({ children }) {
   const { token } = useContext(AuthContext);
@@ -10,8 +11,8 @@ function RutaProtegida({ children }) {
     return <Navigate to="/login" replace />;
   }
 
-  // Si hay un token, mostrar el componente solicitado (la página)
-  return children;
+  // Si hay un token, mostrar el componente solicitado (la página) dentro del Layout
+  return <Layout>{children}</Layout>;
 }
 
 export default RutaProtegida;

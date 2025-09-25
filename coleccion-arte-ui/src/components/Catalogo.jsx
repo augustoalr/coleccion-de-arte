@@ -1,25 +1,21 @@
 import React, { useState, useEffect, useCallback, useContext } from 'react';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
-import { Grid, Card, CardMedia, CardContent, CardActions, Typography, Button, Box, AppBar, Toolbar, TextField, InputAdornment, Paper, Checkbox, FormControlLabel, Pagination, Stack } from '@mui/material';
+import { Grid, Card, CardMedia, CardContent, CardActions, Typography, Button, Box, TextField, InputAdornment, Paper, Checkbox, FormControlLabel, Pagination, Stack } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
-import LogoutIcon from '@mui/icons-material/Logout';
+
 import SearchIcon from '@mui/icons-material/Search';
-import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
-import BackupIcon from '@mui/icons-material/Backup';
-import HistoryIcon from '@mui/icons-material/History';
-import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
-import Chip from '@mui/material/Chip';
+
 
 import IosShareIcon from '@mui/icons-material/IosShare';
 import FormularioObra from './FormularioObra';
 import ModalEditar from './ModalEditar';
 import ModalExportacion from './ModalExportacion';
 import ConfirmDeleteModal from './ConfirmDeleteModal';
-import DashboardIcon from '@mui/icons-material/Dashboard';
+
 import AuthContext from '../context/AuthContext';
 
-import LocationOnIcon from '@mui/icons-material/LocationOn';
+
 import API_URL from '../apiConfig';
 
 
@@ -92,7 +88,7 @@ function Catalogo() {
     }
   };
 
-  const handleLogout = () => { logout(); navigate('/login'); };
+
   
    const handleActionCompleta = useCallback(async () => {
     await refrescarUsuario(); // Primero refresca los puntos del usuario
@@ -179,34 +175,7 @@ function Catalogo() {
 
   return (
     <>
-      <AppBar position="static" color="default" elevation={1} sx={{ mb: 4 }}>
-        <Toolbar>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>Colección de Arte</Typography>
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-            <Button component={RouterLink} to="/dashboard" color="inherit" startIcon={<DashboardIcon />}>
-                Dashboard
-            </Button>
-            {user && user.rol === 'admin' && (
-              <>
-                <Button component={RouterLink} to="/admin/usuarios" color="inherit" startIcon={<AdminPanelSettingsIcon />}>Usuarios</Button>
-                <Button component={RouterLink} to="/admin/backups" color="inherit" startIcon={<BackupIcon />}>Backups</Button>
-                <Button component={RouterLink} to="/historial" color="inherit" startIcon={<HistoryIcon />}>Historial</Button>
-                <Button component={RouterLink} to="/ranking" color="inherit" startIcon={<EmojiEventsIcon />}>Ranking</Button>
-                           
-                                       
 
-              
-
-                <Button component={RouterLink} to="/admin/ubicaciones" color="inherit" startIcon={<LocationOnIcon />}>Ubicaciones</Button> {/* Nuevo Enlace */}
-                 <Chip icon={<EmojiEventsIcon />} label={`${user?.puntos || 0} Puntos`} color="primary" variant="outlined" />
-
-              </>
-            )}
-            <Typography variant="subtitle1">{user?.email}</Typography>
-            <Button variant="outlined" color="inherit" startIcon={<LogoutIcon />} onClick={handleLogout}>Cerrar Sesión</Button>
-          </Box>
-        </Toolbar>
-      </AppBar>
 
       {user && (user.rol === 'admin' || user.rol === 'editor') && (
         <FormularioObra onObraCreada={handleObraCreada} />
