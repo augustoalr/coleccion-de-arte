@@ -1,8 +1,10 @@
 import React, { useState, useEffect, useContext } from 'react';
+import { Link as RouterLink } from 'react-router-dom';
 import { Box, Typography, Paper, List, ListItem, ListItemText, TextField, Button, IconButton, Alert } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import AuthContext from '../context/AuthContext';
 import API_URL from '../apiConfig';
 
@@ -84,33 +86,38 @@ function AdminUbicaciones() {
   };
 
   return (
-    <Paper sx={{ p: 2, mt: 4 }}>
-      <Typography variant="h5" gutterBottom>Gestión de Ubicaciones</Typography>
-      {error && <Alert severity="error" sx={{ mb: 2 }}>{error}</Alert>}
-      <Box component="form" onSubmit={handleSubmit} sx={{ display: 'flex', gap: 2, mb: 2 }}>
-        <TextField 
-          label={currentUbicacion.id ? 'Editar ubicación' : 'Nueva ubicación'} 
-          value={currentUbicacion.nombre} 
-          onChange={(e) => setCurrentUbicacion({ ...currentUbicacion, nombre: e.target.value })} 
-          fullWidth 
-        />
-        <Button type="submit" variant="contained" startIcon={<AddIcon />}>
-          {currentUbicacion.id ? 'Actualizar' : 'Añadir'}
-        </Button>
-      </Box>
-      <List>
-        {ubicaciones.map(u => (
-          <ListItem key={u.id} secondaryAction={
-            <>
-              <IconButton edge="end" onClick={() => handleEdit(u)}><EditIcon /></IconButton>
-              <IconButton edge="end" onClick={() => handleDelete(u.id)}><DeleteIcon /></IconButton>
-            </>
-          }>
-            <ListItemText primary={u.nombre} />
-          </ListItem>
-        ))}
-      </List>
-    </Paper>
+    <Box>
+      <Button component={RouterLink} to="/" startIcon={<ArrowBackIcon />} sx={{ mb: 2 }}>
+        Volver al Catálogo
+      </Button>
+      <Paper sx={{ p: 2, backgroundColor: 'white' }}>
+        <Typography variant="h5" gutterBottom>Gestión de Ubicaciones</Typography>
+        {error && <Alert severity="error" sx={{ mb: 2 }}>{error}</Alert>}
+        <Box component="form" onSubmit={handleSubmit} sx={{ display: 'flex', gap: 2, mb: 2 }}>
+          <TextField 
+            label={currentUbicacion.id ? 'Editar ubicación' : 'Nueva ubicación'} 
+            value={currentUbicacion.nombre} 
+            onChange={(e) => setCurrentUbicacion({ ...currentUbicacion, nombre: e.target.value })} 
+            fullWidth 
+          />
+          <Button type="submit" variant="contained" startIcon={<AddIcon />}>
+            {currentUbicacion.id ? 'Actualizar' : 'Añadir'}
+          </Button>
+        </Box>
+        <List>
+          {ubicaciones.map(u => (
+            <ListItem key={u.id} secondaryAction={
+              <>
+                <IconButton edge="end" onClick={() => handleEdit(u)}><EditIcon /></IconButton>
+                <IconButton edge="end" onClick={() => handleDelete(u.id)}><DeleteIcon /></IconButton>
+              </>
+            }>
+              <ListItemText primary={u.nombre} />
+            </ListItem>
+          ))}
+        </List>
+      </Paper>
+    </Box>
   );
 }
 

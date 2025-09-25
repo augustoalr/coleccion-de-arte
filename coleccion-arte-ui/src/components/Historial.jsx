@@ -180,7 +180,7 @@ const Historial = () => {
   }
 
   return (
-    <Paper sx={{ p: 3, maxWidth: 1200, margin: 'auto', overflow: 'hidden' }}>
+    <Paper sx={{ p: 3, overflow: 'hidden', backgroundColor: 'white' }}>
         <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 3 }}>
             <Typography variant="h4" component="h1">
                 Historial de Cambios

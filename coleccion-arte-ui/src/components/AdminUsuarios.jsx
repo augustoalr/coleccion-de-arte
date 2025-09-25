@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Box, Typography, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Button, Select, MenuItem, CircularProgress, Alert } from '@mui/material';
+import { Link as RouterLink } from 'react-router-dom';
+import { Box, Typography, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Button, Select, MenuItem, CircularProgress, Alert, Paper } from '@mui/material';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import AuthContext from '../context/AuthContext';
 import API_URL from '../apiConfig';
 
@@ -60,44 +62,49 @@ function AdminUsuarios() {
   if (error) return <Alert severity="error">{error}</Alert>;
 
   return (
-    <Paper sx={{ p: 2 }}>
-      <Typography variant="h6" gutterBottom>Gestión de Usuarios</Typography>
-      <TableContainer>
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell>ID</TableCell>
-              <TableCell>Email</TableCell>
-              <TableCell>Rol</TableCell>
-              <TableCell>Acciones</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {usuarios.map((usuario) => (
-              <TableRow key={usuario.id}>
-                <TableCell>{usuario.id}</TableCell>
-                <TableCell>{usuario.email}</TableCell>
-                <TableCell>
-                  <Select
-                    value={usuario.rol}
-                    onChange={(e) => handleRolChange(usuario.id, e.target.value)}
-                    size="small"
-                  >
-                    <MenuItem value="admin">Admin</MenuItem>
-                    <MenuItem value="editor">Editor</MenuItem>
-                    <MenuItem value="conservador">Conservador</MenuItem>
-                    <MenuItem value="lector">Lector</MenuItem>
-                  </Select>
-                </TableCell>
-                <TableCell>
-                  <Button color="error" onClick={() => handleEliminarUsuario(usuario.id)}>Eliminar</Button>
-                </TableCell>
+    <Box>
+      <Button component={RouterLink} to="/" startIcon={<ArrowBackIcon />} sx={{ mb: 2 }}>
+        Volver al Catálogo
+      </Button>
+      <Paper sx={{ p: 2, backgroundColor: 'white' }}>
+        <Typography variant="h6" gutterBottom>Gestión de Usuarios</Typography>
+        <TableContainer>
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell>ID</TableCell>
+                <TableCell>Email</TableCell>
+                <TableCell>Rol</TableCell>
+                <TableCell>Acciones</TableCell>
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-    </Paper>
+            </TableHead>
+            <TableBody>
+              {usuarios.map((usuario) => (
+                <TableRow key={usuario.id}>
+                  <TableCell>{usuario.id}</TableCell>
+                  <TableCell>{usuario.email}</TableCell>
+                  <TableCell>
+                    <Select
+                      value={usuario.rol}
+                      onChange={(e) => handleRolChange(usuario.id, e.target.value)}
+                      size="small"
+                    >
+                      <MenuItem value="admin">Admin</MenuItem>
+                      <MenuItem value="editor">Editor</MenuItem>
+                      <MenuItem value="conservador">Conservador</MenuItem>
+                      <MenuItem value="lector">Lector</MenuItem>
+                    </Select>
+                  </TableCell>
+                  <TableCell>
+                    <Button color="error" onClick={() => handleEliminarUsuario(usuario.id)}>Eliminar</Button>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </Paper>
+    </Box>
   );
 }
 
