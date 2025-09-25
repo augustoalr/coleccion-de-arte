@@ -9,7 +9,7 @@ import BackupIcon from '@mui/icons-material/Backup';
 import HistoryIcon from '@mui/icons-material/History';
 import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
-import { AuthContext } from '../context/AuthContext';
+import AuthContext from '../context/AuthContext';
 
 
 

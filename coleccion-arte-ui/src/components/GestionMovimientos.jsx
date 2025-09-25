@@ -6,7 +6,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import SaveIcon from '@mui/icons-material/Save';
 import CancelIcon from '@mui/icons-material/Cancel';
 import { useCatalogos } from '../hooks/useCatalogos';
-import { AuthContext } from '../context/AuthContext';
+import AuthContext from '../context/AuthContext';
 import API_URL from '../apiConfig';
 
 function GestionMovimientos({ obraId }) {
