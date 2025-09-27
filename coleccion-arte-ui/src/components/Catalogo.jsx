@@ -173,92 +173,382 @@ function Catalogo() {
     setPagina(1);
   }, []);
 
-  return (
-    <>
+  // return (
+  //   <>
 
 
-      {user && (user.rol === 'admin' || user.rol === 'editor') && (
-        <FormularioObra onObraCreada={handleObraCreada} />
+  //     {user && (user.rol === 'admin' || user.rol === 'editor') && (
+  //       <FormularioObra onObraCreada={handleObraCreada} />
         
-      )}
+  //     )}
       
-      <Typography variant="h4" component="h1" gutterBottom sx={{ mt: 4 }}>Catálogo Principal</Typography>
+  //     <Typography variant="h4" component="h1" gutterBottom sx={{ mt: 4 }}>Catálogo Principal</Typography>
       
-      <Paper sx={{ p: 2, mb: 2 }}>
-        <TextField
-          fullWidth
-          label="Buscar por Título, Autor o N° de Registro"
-          variant="outlined"
-          value={terminoBusqueda}
-          onChange={(e) => setTerminoBusqueda(e.target.value)}
-          InputProps={{ startAdornment: (<InputAdornment position="start"><SearchIcon /></InputAdornment>), }}
-        />
-      </Paper>
+  //     <Paper sx={{ p: 2, mb: 2 }}>
+  //       <TextField
+  //         fullWidth
+  //         label="Buscar por Título, Autor o N° de Registro"
+  //         variant="outlined"
+  //         value={terminoBusqueda}
+  //         onChange={(e) => setTerminoBusqueda(e.target.value)}
+  //         InputProps={{ startAdornment: (<InputAdornment position="start"><SearchIcon /></InputAdornment>), }}
+  //       />
+  //     </Paper>
 
-      <Paper sx={{ p: 1, mb: 4, display: 'flex', alignItems: 'center', gap: 2 }}>
-        <FormControlLabel
-          control={<Checkbox checked={obras.length > 0 && seleccionados.length === obras.length} indeterminate={seleccionados.length > 0 && seleccionados.length < obras.length} onChange={handleSeleccionarTodos} />}
-          label={seleccionados.length === 0 ? "Seleccionar todo" : `${seleccionados.length} seleccionado(s)`}
-        />
-        <Button
-          variant="contained"
-          color="secondary"
-          disabled={seleccionados.length === 0}
-          startIcon={<IosShareIcon />}
-          onClick={() => setModalExportOpen(true)}
-        >
-          Exportar
-        </Button>
-      </Paper>
+  //     <Paper sx={{ p: 1, mb: 4, display: 'flex', alignItems: 'center', gap: 2 }}>
+  //       <FormControlLabel
+  //         control={<Checkbox checked={obras.length > 0 && seleccionados.length === obras.length} indeterminate={seleccionados.length > 0 && seleccionados.length < obras.length} onChange={handleSeleccionarTodos} />}
+  //         label={seleccionados.length === 0 ? "Seleccionar todo" : `${seleccionados.length} seleccionado(s)`}
+  //       />
+  //       <Button
+  //         variant="contained"
+  //         color="secondary"
+  //         disabled={seleccionados.length === 0}
+  //         startIcon={<IosShareIcon />}
+  //         onClick={() => setModalExportOpen(true)}
+  //       >
+  //         Exportar
+  //       </Button>
+  //     </Paper>
       
-      <Grid container spacing={3}>
-        {obras.map(obra => (
-          <Grid key={obra.id} xs={12} sm={6} md={4}>
-            <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column', width: '100%' }}>
-              <Box sx={{ position: 'relative' }}>
-                <Checkbox checked={seleccionados.includes(obra.id)} onChange={() => handleSeleccionChange(obra.id)} onClick={(e) => e.stopPropagation()} sx={{ position: 'absolute', top: 0, left: 0, zIndex: 1, color: 'white', '&.Mui-checked': { color: 'primary.main' } }} />
+  //     <Grid container spacing={3}>
+  //       {obras.map(obra => (
+  //         <Grid key={obra.id} xs={12} sm={6} md={4}>
+  //           <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column', width: '100%' }}>
+  //             <Box sx={{ position: 'relative' }}>
+  //               <Checkbox checked={seleccionados.includes(obra.id)} onChange={() => handleSeleccionChange(obra.id)} onClick={(e) => e.stopPropagation()} sx={{ position: 'absolute', top: 0, left: 0, zIndex: 1, color: 'white', '&.Mui-checked': { color: 'primary.main' } }} />
+  //               {obra.url_imagen ? (
+  //                 <CardMedia component="img" height="140" image={`${API_URL}/${obra.url_imagen}`} alt={obra.titulo} />
+  //               ) : (
+  //                 <Box sx={{ height: 140, bgcolor: 'grey.200', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+  //                   <Typography color="text.secondary">Sin imagen</Typography>
+  //                 </Box>
+  //               )}
+  //             </Box>
+  //             <CardContent component={RouterLink} to={`/obras/${obra.id}`} sx={{ flexGrow: 1, textDecoration: 'none', color: 'inherit', '&:hover': { bgcolor: 'action.hover' } }}>
+  //               <Typography gutterBottom variant="h5" component="div">{obra.titulo}</Typography>
+  //               <Typography color="text.secondary">{obra.autor_nombre}</Typography>
+  //             </CardContent>
+  //             {user && (user.rol === 'admin' || user.rol === 'editor') && (
+  //               <CardActions>
+  //                 <Button size="small" startIcon={<EditIcon />} onClick={(e) => handleAbrirModal(obra, e)}>Editar</Button>
+  //                 <Button size="small" color="error" startIcon={<DeleteIcon />} onClick={(e) => handleAbrirModalEliminar(obra, e)}>Eliminar</Button>
+  //               </CardActions>
+  //             )}
+  //           </Card>
+  //         </Grid>
+  //       ))}
+  //     </Grid>
+
+  //     <Stack spacing={2} sx={{ mt: 4, mb: 4, alignItems: 'center' }}>
+  //       <Pagination count={totalPaginas} page={pagina} onChange={handlePageChange} color="primary" />
+  //     </Stack>
+
+  //     {modalVisible && (
+  //       <ModalEditar obra={obraEnEdicion} onClose={handleCerrarModal} onSave={handleGuardarCambios} />
+  //     )}
+
+  //     {modalExportOpen && (
+  //       <ModalExportacion open={modalExportOpen} onClose={() => setModalExportOpen(false)} ids={seleccionados} />
+  //     )}
+  //     <ConfirmDeleteModal
+  //       open={deleteModalOpen}
+  //       onClose={handleCerrarModalEliminar}
+  //       onConfirm={handleConfirmarEliminar}
+  //       title={`¿Eliminar la obra "${obraAEliminar?.titulo}"?`}
+  //     />
+  //   </>
+  // );
+
+   return (
+      <>
+  
+  
+        {user && (user.rol === 'admin' || user.rol === 'editor') && (
+          <FormularioObra onObraCreada={handleObraCreada} />
+          
+        )}
+        
+        <Typography variant="h4" component="h1" gutterBottom sx={{ mt: 4 }}>CatÃ¡logo Principal</Typography>
+        
+        <Paper sx={{ p: 2, mb: 2 }}>
+          <TextField
+            fullWidth
+            label="Buscar por título, autor o N° de Registro"
+            variant="outlined"
+            value={terminoBusqueda}
+            onChange={(e) => setTerminoBusqueda(e.target.value)}
+            InputProps={{ startAdornment: (<InputAdornment position="start"><SearchIcon /></InputAdornment>), }}
+          />
+        </Paper>
+  
+        <Paper sx={{ p: 1, mb: 4, display: 'flex', alignItems: 'center', gap: 2 }}>
+          <FormControlLabel
+            control={<Checkbox checked={obras.length > 0 && seleccionados.length === obras.length} indeterminate={seleccionados.length > 0 && seleccionados.length < obras.length} onChange={handleSeleccionarTodos} />}
+            label={seleccionados.length === 0 ? "Seleccionar todo" : `${seleccionados.length} seleccionado(s)`}
+          />
+          <Button
+            variant="contained"
+            color="secondary"
+            disabled={seleccionados.length === 0}
+            startIcon={<IosShareIcon />}
+            onClick={() => setModalExportOpen(true)}
+          >
+            Exportar
+          </Button>
+        </Paper>
+        
+        <Box sx={{ 
+          display: 'grid', 
+          gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))',
+          gap: 3,
+          '@media (max-width: 640px)': {
+            gridTemplateColumns: '1fr',
+            gap: 2
+          }
+        }}>
+          {obras.map(obra => (
+            <Card 
+              key={obra.id} 
+              sx={{ 
+                position: 'relative',
+                borderRadius: 3,
+                overflow: 'hidden',
+                transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                cursor: 'pointer',
+                background: 'linear-gradient(145deg, #ffffff, #f8f9fa)',
+                border: '1px solid',
+                borderColor: 'divider',
+                textDecoration: 'none',
+                color: 'inherit',
+                '&:hover': {
+                  transform: 'translateY(-8px)',
+                  boxShadow: '0 20px 40px rgba(0,0,0,0.1)',
+                  borderColor: 'primary.main'
+                }
+              }}
+            >
+              {/* Checkbox flotante con mejor diseño */}
+              <Checkbox 
+                checked={seleccionados.includes(obra.id)} 
+                onChange={() => handleSeleccionChange(obra.id)} 
+                onClick={(e) => e.stopPropagation()} 
+                sx={{ 
+                  position: 'absolute', 
+                  top: 12, 
+                  left: 12, 
+                  zIndex: 2,
+                  bgcolor: 'rgba(255, 255, 255, 0.9)',
+                  borderRadius: '50%',
+                  width: 32,
+                  height: 32,
+                  '&:hover': {
+                    bgcolor: 'rgba(255, 255, 255, 1)',
+                    transform: 'scale(1.1)'
+                  },
+                  '&.Mui-checked': { 
+                    color: 'primary.main',
+                    bgcolor: 'primary.main',
+                    '& .MuiSvgIcon-root': {
+                      color: 'white'
+                    }
+                  }
+                }} 
+              />
+  
+              {/* Imagen con overlay gradient */}
+              <Box sx={{ 
+                position: 'relative', 
+                height: 200,
+                overflow: 'hidden'
+              }}>
                 {obra.url_imagen ? (
-                  <CardMedia component="img" height="140" image={`${API_URL}/${obra.url_imagen}`} alt={obra.titulo} />
+                  <>
+                    <CardMedia 
+                      component="img" 
+                      height="200" 
+                      image={`${API_URL}/${obra.url_imagen}`} 
+                      alt={obra.titulo}
+                      sx={{
+                        objectFit: 'cover',
+                        transition: 'transform 0.3s ease',
+                        '&:hover': {
+                          transform: 'scale(1.05)'
+                        }
+                      }}
+                    />
+                    <Box sx={{
+                      position: 'absolute',
+                      bottom: 0,
+                      left: 0,
+                      right: 0,
+                      height: '50%',
+                      background: 'linear-gradient(transparent, rgba(0,0,0,0.7))',
+                      pointerEvents: 'none'
+                    }} />
+                  </>
                 ) : (
-                  <Box sx={{ height: 140, bgcolor: 'grey.200', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                    <Typography color="text.secondary">Sin imagen</Typography>
+                  <Box sx={{ 
+                    height: '100%', 
+                    bgcolor: 'grey.100',
+                    display: 'flex', 
+                    alignItems: 'center', 
+                    justifyContent: 'center',
+                    background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                    position: 'relative'
+                  }}>
+                    <Typography 
+                      color="white" 
+                      variant="h6" 
+                      sx={{ 
+                        textAlign: 'center',
+                        fontWeight: 500,
+                        textShadow: '0 2px 4px rgba(0,0,0,0.3)'
+                      }}
+                    >
+                      Sin imagen
+                    </Typography>
                   </Box>
                 )}
               </Box>
-              <CardContent component={RouterLink} to={`/obras/${obra.id}`} sx={{ flexGrow: 1, textDecoration: 'none', color: 'inherit', '&:hover': { bgcolor: 'action.hover' } }}>
-                <Typography gutterBottom variant="h5" component="div">{obra.titulo}</Typography>
-                <Typography color="text.secondary">{obra.autor_nombre}</Typography>
+  
+              {/* Contenido con altura fija */}
+              <CardContent 
+                component={RouterLink} 
+                to={`/obras/${obra.id}`} 
+                sx={{ 
+                  p: 3,
+                  height: 120, // Altura fija para consistencia
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'space-between',
+                  textDecoration: 'none',
+                  color: 'inherit',
+                  '&:hover': { bgcolor: 'action.hover' }
+                }}
+              >
+                <Box>
+                  <Typography 
+                    variant="h6" 
+                    component="div"
+                    sx={{ 
+                      fontWeight: 600,
+                      fontSize: '1.1rem',
+                      lineHeight: 1.3,
+                      mb: 1,
+                      display: '-webkit-box',
+                      WebkitLineClamp: 2,
+                      WebkitBoxOrient: 'vertical',
+                      overflow: 'hidden',
+                      textOverflow: 'ellipsis',
+                      minHeight: '2.6rem' // Espacio para 2 líneas
+                    }}
+                  >
+                    {obra.titulo}
+                  </Typography>
+                  
+                  <Typography 
+                    color="text.secondary" 
+                    variant="body2"
+                    sx={{
+                      display: '-webkit-box',
+                      WebkitLineClamp: 1,
+                      WebkitBoxOrient: 'vertical',
+                      overflow: 'hidden',
+                      textOverflow: 'ellipsis',
+                      fontSize: '0.9rem',
+                      fontStyle: 'italic'
+                    }}
+                  >
+                    {obra.autor_nombre}
+                  </Typography>
+                </Box>
               </CardContent>
+  
+              {/* Indicador visual para obras seleccionadas */}
+              {seleccionados.includes(obra.id) && (
+                <Box sx={{
+                  position: 'absolute',
+                  top: 0,
+                  left: 0,
+                  right: 0,
+                  bottom: 0,
+                  bgcolor: 'rgba(25, 118, 210, 0.1)',
+                  border: '2px solid',
+                  borderColor: 'primary.main',
+                  borderRadius: 3,
+                  pointerEvents: 'none'
+                }} />
+              )}
+  
+              {/* Botones de acción con mejor diseño */}
               {user && (user.rol === 'admin' || user.rol === 'editor') && (
-                <CardActions>
-                  <Button size="small" startIcon={<EditIcon />} onClick={(e) => handleAbrirModal(obra, e)}>Editar</Button>
-                  <Button size="small" color="error" startIcon={<DeleteIcon />} onClick={(e) => handleAbrirModalEliminar(obra, e)}>Eliminar</Button>
+                <CardActions sx={{ 
+                  p: 2, 
+                  pt: 0,
+                  gap: 1,
+                  justifyContent: 'flex-end'
+                }}>
+                  <Button 
+                    size="small" 
+                    variant="outlined"
+                    startIcon={<EditIcon />} 
+                    onClick={(e) => handleAbrirModal(obra, e)}
+                    sx={{
+                      borderRadius: 2,
+                      textTransform: 'none',
+                      fontWeight: 500,
+                      '&:hover': {
+                        bgcolor: 'primary.main',
+                        color: 'white'
+                      }
+                    }}
+                  >
+                    Editar
+                  </Button>
+                  <Button 
+                    size="small" 
+                    variant="outlined"
+                    color="error" 
+                    startIcon={<DeleteIcon />} 
+                    onClick={(e) => handleAbrirModalEliminar(obra, e)}
+                    sx={{
+                      borderRadius: 2,
+                      textTransform: 'none',
+                      fontWeight: 500,
+                      '&:hover': {
+                        bgcolor: 'error.main',
+                        color: 'white'
+                      }
+                    }}
+                  >
+                    Eliminar
+                  </Button>
                 </CardActions>
               )}
             </Card>
-          </Grid>
-        ))}
-      </Grid>
-
-      <Stack spacing={2} sx={{ mt: 4, mb: 4, alignItems: 'center' }}>
-        <Pagination count={totalPaginas} page={pagina} onChange={handlePageChange} color="primary" />
-      </Stack>
-
-      {modalVisible && (
-        <ModalEditar obra={obraEnEdicion} onClose={handleCerrarModal} onSave={handleGuardarCambios} />
-      )}
-
-      {modalExportOpen && (
-        <ModalExportacion open={modalExportOpen} onClose={() => setModalExportOpen(false)} ids={seleccionados} />
-      )}
-      <ConfirmDeleteModal
-        open={deleteModalOpen}
-        onClose={handleCerrarModalEliminar}
-        onConfirm={handleConfirmarEliminar}
-        title={`¿Eliminar la obra "${obraAEliminar?.titulo}"?`}
-      />
-    </>
-  );
+          ))}
+        </Box>
+  
+        <Stack spacing={2} sx={{ mt: 4, mb: 4, alignItems: 'center' }}>
+          <Pagination count={totalPaginas} page={pagina} onChange={handlePageChange} color="primary" />
+        </Stack>
+  
+        {modalVisible && (
+          <ModalEditar obra={obraEnEdicion} onClose={handleCerrarModal} onSave={handleGuardarCambios} />
+        )}
+  
+        {modalExportOpen && (
+          <ModalExportacion open={modalExportOpen} onClose={() => setModalExportOpen(false)} ids={seleccionados} />
+        )}
+        <ConfirmDeleteModal
+          open={deleteModalOpen}
+          onClose={handleCerrarModalEliminar}
+          onConfirm={handleConfirmarEliminar}
+          title={`¿Eliminar la obra "${obraAEliminar?.titulo}"?`}
+        />
+      </>
+    );
 }
 
 export default Catalogo;
