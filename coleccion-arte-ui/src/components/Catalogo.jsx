@@ -8,7 +8,6 @@ import SearchIcon from '@mui/icons-material/Search';
 
 
 import IosShareIcon from '@mui/icons-material/IosShare';
-import FormularioObra from './FormularioObra';
 import ModalEditar from './ModalEditar';
 import ModalExportacion from './ModalExportacion';
 import ConfirmDeleteModal from './ConfirmDeleteModal';
@@ -168,10 +167,6 @@ function Catalogo() {
     }
   };
 
-  const handleObraCreada = useCallback(() => {
-    setTerminoBusqueda('');
-    setPagina(1);
-  }, []);
 
   // return (
   //   <>
@@ -262,14 +257,9 @@ function Catalogo() {
 
    return (
       <>
-  
-  
-        {user && (user.rol === 'admin' || user.rol === 'editor') && (
-          <FormularioObra onObraCreada={handleObraCreada} />
-          
-        )}
-        
-        <Typography variant="h4" component="h1" gutterBottom sx={{ mt: 4 }}>CatÃ¡logo Principal</Typography>
+
+
+        <Typography variant="h4" component="h1" gutterBottom sx={{ mt: 4 }}>Catálogo Principal</Typography>
         
         <Paper sx={{ p: 2, mb: 2 }}>
           <TextField

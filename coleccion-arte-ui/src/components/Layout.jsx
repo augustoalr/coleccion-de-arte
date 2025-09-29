@@ -34,8 +34,9 @@ const Layout = ({ children }) => {
   };
 
   const menuItems = [
-    { text: 'Catálogo', icon: <ArtTrackIcon />, path: '/' },
     { text: 'Dashboard', icon: <DashboardIcon />, path: '/dashboard' },
+    { text: 'Inventario', icon: <ArtTrackIcon />, path: '/' },
+    { text: 'Formulario', icon: <ArtTrackIcon />, path: '/formulario' },
   ];
 
   const adminMenuItems = [

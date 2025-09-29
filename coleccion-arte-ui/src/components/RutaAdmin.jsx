@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { Navigate } from 'react-router-dom';
 import AuthContext from '../context/AuthContext';
+import Layout from './Layout';
 
 function RutaAdmin({ children }) {
   const { user } = useContext(AuthContext);
@@ -10,8 +11,8 @@ function RutaAdmin({ children }) {
     return <Navigate to="/" replace />;
   }
 
-  // Si es admin, mostrar el componente solicitado
-  return children;
+  // Si es admin, mostrar el componente solicitado dentro del Layout
+  return <Layout>{children}</Layout>;
 }
 
 export default RutaAdmin;

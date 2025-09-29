@@ -14,6 +14,7 @@ import AdminCrearUsuario from './components/AdminCrearUsuario'; // Importar
 import Dashboard from './components/Dashboard';
 import Historial from './components/Historial'; // Importar Historial
 import AdminUbicaciones from './components/AdminUbicaciones'; // Importar nuevo componente
+import FormularioObra from './components/FormularioObra';
 
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/" element={<RutaProtegida><Catalogo /></RutaProtegida>} />
           <Route path="/dashboard" element={<RutaProtegida><Dashboard /></RutaProtegida>} />
+          <Route path="/formulario" element={<RutaProtegida><FormularioObra /></RutaProtegida>} />
           <Route path="/obras/:id" element={<RutaProtegida><ObraDetalle /></RutaProtegida>} />
 
           <Route path="/admin/ubicaciones" element={<RutaAdmin><AdminUbicaciones /></RutaAdmin>} /> 

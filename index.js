@@ -23,7 +23,7 @@ const PORT = 4000;
 //app.use(cors());
 const corsOptions = {
 
-    origin: 'https://coleccion-de-arte.vercel.app', 
+    origin: ['https://coleccion-de-arte.vercel.app', 'http://localhost:5173'], // Ajusta esto según tus necesidades
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true,
@@ -762,6 +762,24 @@ app.get('/api/dashboard/stats', authorize(allUsers), async (req, res) => {
         res.json(stats);
     } catch (err) {
         console.error("Error al obtener estadísticas del dashboard:", err.message);
+        res.status(500).send('Error en el servidor');
+    }
+});
+
+// --- RUTA PARA ESTADÍSTICAS DE CATEGORÍAS DEL DASHBOARD ---
+app.get('/api/dashboard/categories', authorize(allUsers), async (req, res) => {
+    try {
+        const categoriesResult = await pool.query(`
+            SELECT categoria AS nombre, COUNT(*) AS cantidad
+            FROM obras
+            WHERE categoria IS NOT NULL AND categoria != ''
+            GROUP BY categoria
+            ORDER BY cantidad DESC
+        `);
+
+        res.json(categoriesResult.rows);
+    } catch (err) {
+        console.error("Error al obtener estadísticas de categorías:", err.message);
         res.status(500).send('Error en el servidor');
     }
 });
